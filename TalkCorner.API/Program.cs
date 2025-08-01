@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using TalkCorner.Application;
+using TalkCorner.Persistence;
+using TalkCorner.Persistence.DatabaseContext;
+
 namespace TalkCorner.API
 {
     public class Program
@@ -6,18 +11,20 @@ namespace TalkCorner.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.AddApplicationServices(builder.Configuration);
+            builder.Services.AddPersistenceServices(builder.Configuration);
 
             builder.Services.AddControllers();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            using var scope = app.Services.CreateScope();
+            var ctx = scope.ServiceProvider.GetRequiredService<TalkCornerDbContext>();
+            ctx.Database.Migrate();
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

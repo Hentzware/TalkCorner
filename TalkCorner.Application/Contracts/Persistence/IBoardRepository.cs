@@ -7,4 +7,9 @@ namespace TalkCorner.Application.Contracts.Persistence;
 /// </summary>
 public interface IBoardRepository : IGenericRepository<Board>
 {
+    Task<IEnumerable<Board>> GetBoardsAsync();
+
+    Task<Board?> GetBoardByIdAsync(Guid id);
+
+    Task<Board?> GetBoardByIdWithTrackingAsync(Guid id);
 }

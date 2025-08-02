@@ -2,13 +2,15 @@
 
 namespace TalkCorner.Domain.ValueObjects;
 
-/// <summary>
-///     Represents a user's display name. Immutable value object,
-///     enforces domain-specific rules and compares by value.
-/// </summary>
 public sealed class DisplayName : ValueObject
 {
-    private DisplayName(){}
+    public const int MaxLength = 32;
+
+    public const int MinLength = 2;
+
+    private DisplayName()
+    {
+    }
 
     private DisplayName(string value)
     {
@@ -17,25 +19,29 @@ public sealed class DisplayName : ValueObject
 
     public string Value { get; }
 
-    /// <summary>
-    ///     Factory method to create a new DisplayName after validating input.
-    /// </summary>
-    /// <param name="value">The display name string (non-null, length constraints).</param>
-    /// <returns>A valid DisplayName instance.</returns>
-    /// <exception cref="ArgumentException">If display name is invalid.</exception>
     public static DisplayName Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ArgumentException("DisplayName cannot be empty.", nameof(value));
+            throw new ArgumentException("DisplayName must not be empty.", nameof(value));
         }
 
-        if (value.Trim().Length < 3 || value.Trim().Length > 100)
+        if (value.Length < MinLength)
         {
-            throw new ArgumentException("DisplayName length must be between 3 and 100 characters.", nameof(value));
+            throw new ArgumentException($"DisplayName must be at least {MinLength} characters long.", nameof(value));
         }
 
-        return new DisplayName(value.Trim());
+        if (value.Length > MaxLength)
+        {
+            throw new ArgumentException($"DisplayName must be at most {MaxLength} characters long.", nameof(value));
+        }
+
+        if (!value.All(c => char.IsLetterOrDigit(c) || c == '_' || c == '-'))
+        {
+            throw new ArgumentException("DisplayName may only contain letters, digits, underscores and dashes.", nameof(value));
+        }
+
+        return new DisplayName(value);
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

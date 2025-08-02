@@ -6,9 +6,7 @@ namespace TalkCorner.Domain.Entities;
 
 public class Thread : BaseEntity
 {
-    private readonly List<Post> _posts = new();
-
-    private Thread()
+    public Thread()
     {
     }
 
@@ -21,73 +19,25 @@ public class Thread : BaseEntity
 
     [ForeignKey(nameof(BoardId))]
     [InverseProperty(nameof(Board.Threads))]
-    public Board Board { get; private set; }
+    public Board Board { get; private set; } = null!;
 
     public Guid BoardId { get; private set; }
 
     public Guid CreatedByUserId { get; private set; }
 
     [InverseProperty(nameof(Post.Thread))]
-    public IReadOnlyCollection<Post> Posts => _posts.AsReadOnly();
+    public IReadOnlyCollection<Post> Posts { get; private set; } = new List<Post>();
 
     public ThreadTitle Title { get; private set; } = null!;
 
     [ForeignKey(nameof(CreatedByUserId))]
     [InverseProperty(nameof(User.Threads))]
-    public User CreatedByUser { get; private set; }
+    public User CreatedByUser { get; private set; } = null!;
 
-    public static Thread Create(string title, User createdByUser, Board board)
+    public static Thread Create(string title, Guid createdByUserId, Guid boardId)
     {
-        if (createdByUser == null)
-        {
-            throw new ArgumentNullException(nameof(createdByUser));
-        }
-
-        if (board == null)
-        {
-            throw new ArgumentNullException(nameof(board));
-        }
-
         var threadTitle = ThreadTitle.Create(title);
-
-        var thread = new Thread(threadTitle, createdByUser.Id, board.Id);
-
-        // Navigationen setzen
-        thread.SetCreatedByUser(createdByUser);
-        thread.SetBoard(board);
-
-        // Listen auffüllen
-        createdByUser.AddThread(thread);
-        board.AddThread(thread);
-
-        return thread;
-    }
-
-    private void SetCreatedByUser(User user)
-    {
-        CreatedByUser = user;
-        CreatedByUserId = user.Id;
-    }
-
-    private void SetBoard(Board board)
-    {
-        Board = board;
-        BoardId = board.Id;
-    }
-
-    public void AddPost(Post post)
-    {
-        if (post == null)
-        {
-            throw new ArgumentNullException(nameof(post));
-        }
-
-        if (_posts.Contains(post))
-        {
-            throw new InvalidOperationException("This post already exists in the thread.");
-        }
-
-        _posts.Add(post);
+        return new Thread(threadTitle, createdByUserId, boardId);
     }
 
     public void UpdateTitle(string newTitle)

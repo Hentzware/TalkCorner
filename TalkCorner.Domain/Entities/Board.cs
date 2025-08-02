@@ -6,19 +6,16 @@ namespace TalkCorner.Domain.Entities;
 
 public class Board : BaseEntity
 {
-    private readonly List<Board> _subBoards = new();
-    private readonly List<Thread> _threads = new();
-    private readonly List<User> _moderators = new();
-
-    private Board()
+    public Board()
     {
     }
 
-    private Board(BoardTitle title, BoardDescription description, Guid createdByUserId)
+    private Board(BoardTitle title, BoardDescription description, Guid createdByUserId, Guid? parentBoardId = null)
     {
         Title = title;
         Description = description;
         CreatedByUserId = createdByUserId;
+        ParentBoardId = parentBoardId;
     }
 
     [ForeignKey(nameof(ParentBoardId))]
@@ -34,126 +31,23 @@ public class Board : BaseEntity
     public Guid? ParentBoardId { get; private set; }
 
     [InverseProperty(nameof(ParentBoard))]
-    public IReadOnlyCollection<Board> SubBoards => _subBoards.AsReadOnly();
+    public IReadOnlyCollection<Board> SubBoards { get; private set; } = new List<Board>();
 
     [InverseProperty(nameof(Thread.Board))]
-    public IReadOnlyCollection<Thread> Threads => _threads.AsReadOnly();
+    public IReadOnlyCollection<Thread> Threads { get; private set; } = new List<Thread>();
 
     [InverseProperty(nameof(User.ModeratedBoards))]
-    public IReadOnlyCollection<User> Moderators => _moderators.AsReadOnly();
+    public IReadOnlyCollection<User> Moderators { get; private set; } = new List<User>();
 
     [ForeignKey(nameof(CreatedByUserId))]
     [InverseProperty(nameof(User.CreatedBoards))]
     public User CreatedByUser { get; private set; } = null!;
 
-    public void AddThread(Thread thread)
+    public static Board Create(string title, string description, Guid createdByUserId, Guid? parentBoardId = null)
     {
-        if (thread == null)
-        {
-            throw new ArgumentNullException(nameof(thread), "Thread must not be null.");
-        }
-
-        if (_threads.Contains(thread))
-        {
-            throw new InvalidOperationException("Thread is already added to the board.");
-        }
-
-        _threads.Add(thread);
-    }
-
-    public void RemoveThread(Thread thread)
-    {
-        if (!_threads.Contains(thread))
-        {
-            throw new InvalidOperationException("Thread not found in the board.");
-        }
-
-        _threads.Remove(thread);
-    }
-
-    public void AddModerator(User user)
-    {
-        if (user == null)
-        {
-            throw new ArgumentNullException(nameof(user), "User must not be null.");
-        }
-
-        if (_moderators.Contains(user))
-        {
-            throw new InvalidOperationException("User is already a moderator.");
-        }
-
-        _moderators.Add(user);
-    }
-
-    public void RemoveModerator(User user)
-    {
-        if (!_moderators.Contains(user))
-        {
-            throw new InvalidOperationException("User is not a moderator.");
-        }
-
-        _moderators.Remove(user);
-    }
-
-    public void AddSubBoard(Board subBoard)
-    {
-        if (subBoard == null)
-        {
-            throw new ArgumentNullException(nameof(subBoard), "Sub-board must not be null.");
-        }
-
-        if (_subBoards.Contains(subBoard))
-        {
-            throw new InvalidOperationException("The board is already added as a sub-board.");
-        }
-
-        subBoard.SetParentBoard(this);
-        _subBoards.Add(subBoard);
-    }
-
-    public void RemoveSubBoard(Board subBoard)
-    {
-        if (subBoard == null)
-        {
-            throw new ArgumentNullException(nameof(subBoard), "Sub-board must not be null.");
-        }
-
-        if (!_subBoards.Contains(subBoard))
-        {
-            throw new InvalidOperationException("The board does not contain the sub-board.");
-        }
-
-        _subBoards.Remove(subBoard);
-        subBoard.ClearParentBoard();
-    }
-
-    private void ClearParentBoard()
-    {
-        ParentBoard = null;
-        ParentBoardId = null;
-    }
-
-    private void SetParentBoard(Board parent)
-    {
-        ParentBoard = parent;
-        ParentBoardId = parent.Id;
-    }
-
-    public static Board Create(string title, string description, User createdByUser)
-    {
-        if (createdByUser == null)
-            throw new ArgumentNullException(nameof(createdByUser));
-
         var boardTitle = BoardTitle.Create(title);
         var boardDescription = BoardDescription.Create(description);
-
-        var board = new Board(boardTitle, boardDescription, createdByUser.Id);
-
-        // Setze Navigation explizit
-        board.SetCreatedByUser(createdByUser);
-
-        return board;
+        return new Board(boardTitle, boardDescription, createdByUserId, parentBoardId);
     }
 
     public void UpdateTitle(string newTitle)
@@ -164,12 +58,5 @@ public class Board : BaseEntity
     public void UpdateDescription(string newDescription)
     {
         Description = BoardDescription.Create(newDescription);
-    }
-
-    // z.B. als interne Methode oder Property-Setter:
-    private void SetCreatedByUser(User user)
-    {
-        CreatedByUser = user;
-        CreatedByUserId = user.Id;
     }
 }

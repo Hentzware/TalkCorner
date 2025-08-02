@@ -1,12 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data.Common;
 using TalkCorner.Application.Contracts.Persistence;
-using TalkCorner.Domain.Entities;
 using TalkCorner.Persistence.DatabaseContext;
 using TalkCorner.Persistence.Repositories;
-using Thread = TalkCorner.Domain.Entities.Thread;
 
 namespace TalkCorner.Persistence;
 
@@ -42,10 +40,7 @@ public static class PersistenceServiceRegistration
         // 3. Register DbContext with MySQL provider and retry policy on failure
         services.AddDbContext<TalkCornerDbContext>(options =>
         {
-            options
-                .UseMySql(connectionString, new MySqlServerVersion(new Version(9, 4, 0)), sqlOptions => sqlOptions.EnableRetryOnFailure())
-                .UseSeeding((context, _) => SeedDomainData(context))
-                .UseAsyncSeeding(async (context, _, ct) => await SeedDomainDataAsync(context, ct));
+            options.UseMySql(connectionString, new MySqlServerVersion(new Version(9, 4, 0)), sqlOptions => sqlOptions.EnableRetryOnFailure());
         });
 
         // 4. Register repositories
@@ -63,30 +58,5 @@ public static class PersistenceServiceRegistration
         }
 
         return services;
-    }
-
-    private static void SeedDomainData(DbContext context)
-    {
-        var ctx = (TalkCornerDbContext)context;
-        Console.WriteLine("Seeding start…");
-
-        if (ctx.Users.AsEnumerable().Any(u => u.DisplayName.Value == "User01"))
-        {
-            Console.WriteLine("Seed skipped: User exists");
-            return;
-        }
-
-        var user = User.Create(Guid.NewGuid(), "User01");
-        var board = Board.Create("Board 1", "Desc", user);
-        var thread = Thread.Create("Test Thread", user, board);
-        var post = Post.Create("Hallo Welt", user, thread);
-
-        ctx.Users.Add(user);
-        ctx.SaveChanges();
-    }
-
-    private static async Task SeedDomainDataAsync(DbContext context, CancellationToken ct)
-    {
-        await Task.Run(() => SeedDomainData(context), ct);
     }
 }

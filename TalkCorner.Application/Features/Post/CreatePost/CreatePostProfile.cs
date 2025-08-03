@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 
-namespace TalkCorner.Application.Features.Post.CreatePost
+namespace TalkCorner.Application.Features.Post.CreatePost;
+
+public class CreatePostProfile : Profile
 {
-    internal class CreatePostProfile
+    public CreatePostProfile()
     {
+        CreateMap<CreatePostCommand, Domain.Entities.Post>();
     }
 }

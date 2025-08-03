@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace TalkCorner.Application.Features.Post.CreatePost
+namespace TalkCorner.Application.Features.Post.CreatePost;
+
+public class CreatePostCommand : IRequest<Unit>
 {
-    internal class CreatePostCommand
-    {
-    }
+    public Guid CreatedByUserId { get; set; }
+
+    public Guid ThreadId { get; set; }
+
+    public Guid? ParentPostId { get; set; }
+
+    public string Content { get; set; } = string.Empty;
 }

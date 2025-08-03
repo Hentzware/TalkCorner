@@ -13,7 +13,7 @@ namespace TalkCorner.API.Controllers;
 public class BoardController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GetAllBoardsDto>>> GetAsync()
+    public async Task<ActionResult<IEnumerable<GetAllBoardsDto>>> GetAllBoardsAsync()
     {
         var request = new GetAllBoardsQuery();
         var response = await mediator.Send(request);
@@ -21,7 +21,7 @@ public class BoardController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<GetBoardByIdDto>> GetByIdAsync(Guid id)
+    public async Task<ActionResult<GetBoardByIdDto>> GetBoardByIdAsync(Guid id)
     {
         var request = new GetBoardByIdQuery(id);
         var response = await mediator.Send(request);
@@ -32,7 +32,7 @@ public class BoardController(IMediator mediator) : ControllerBase
     public async Task<ActionResult> CreateBoardAsync([FromBody] CreateBoardCommand request)
     {
         await mediator.Send(request);
-        return Ok();
+        return Created();
     }
 
     [HttpDelete("{id:guid}")]
@@ -40,7 +40,7 @@ public class BoardController(IMediator mediator) : ControllerBase
     {
         var request = new DeleteBoardCommand() { Id = id };
         await mediator.Send(request);
-        return Ok();
+        return NoContent();
     }
 
     [HttpPut("{id:guid}")]
@@ -48,6 +48,6 @@ public class BoardController(IMediator mediator) : ControllerBase
     {
         request.Id = id;
         await mediator.Send(request);
-        return Ok();
+        return NoContent();
     }
 }

@@ -46,6 +46,9 @@ public static class PersistenceServiceRegistration
         // 4. Register repositories
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IBoardRepository, BoardRepository>();
+        services.AddScoped<IThreadRepository, ThreadRepository>();
+        services.AddScoped<IPostRepository, PostRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         // 5. Immediately validate database connectivity at startup
         using var serviceProvider = services.BuildServiceProvider();

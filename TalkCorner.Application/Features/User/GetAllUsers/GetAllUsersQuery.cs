@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace TalkCorner.Application.Features.User.GetAllUsers
-{
-    internal class GetAllUsersQuery
-    {
-    }
-}
+namespace TalkCorner.Application.Features.User.GetAllUsers;
+
+public record GetAllUsersQuery : IRequest<IEnumerable<GetAllUsersDto>>;

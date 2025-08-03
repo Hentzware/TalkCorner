@@ -38,11 +38,7 @@ public static class PersistenceServiceRegistration
         _ = new DbConnectionStringBuilder { ConnectionString = connectionString };
 
         // 3. Register DbContext with MySQL provider and retry policy on failure
-        services.AddDbContext<TalkCornerDbContext>(options =>
-        {
-            options.UseMySql(connectionString, new MySqlServerVersion(new Version(9, 4, 0)), sqlOptions => sqlOptions.EnableRetryOnFailure());
-        });
-
+        services.AddDbContext<TalkCornerDbContext>(options => { options.UseMySql(connectionString, new MySqlServerVersion(new Version(9, 4, 0)), sqlOptions => sqlOptions.EnableRetryOnFailure()); });
         // 4. Register repositories
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IBoardRepository, BoardRepository>();

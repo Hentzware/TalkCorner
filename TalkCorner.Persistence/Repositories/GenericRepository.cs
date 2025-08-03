@@ -6,16 +6,16 @@ using TalkCorner.Persistence.DatabaseContext;
 namespace TalkCorner.Persistence.Repositories;
 
 /// <summary>
-/// Generic EF Core repository implementation for aggregate roots.
+///     Generic EF Core repository implementation for aggregate roots.
 /// </summary>
 /// <typeparam name="T">The aggregate root type.</typeparam>
 /// <param name="context">The database context injected via primary constructor.</param>
 public class GenericRepository<T>(TalkCornerDbContext context) : IGenericRepository<T> where T : BaseEntity
 {
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public IUnitOfWork UnitOfWork => context;
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public async Task<IEnumerable<T>> GetAsync(CancellationToken cancellationToken = default)
     {
         return await context
@@ -24,7 +24,7 @@ public class GenericRepository<T>(TalkCornerDbContext context) : IGenericReposit
             .ToListAsync(cancellationToken);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await context
@@ -40,7 +40,7 @@ public class GenericRepository<T>(TalkCornerDbContext context) : IGenericReposit
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public async Task AddAsync(T entity, CancellationToken cancellationToken = default)
     {
         await context
@@ -48,14 +48,14 @@ public class GenericRepository<T>(TalkCornerDbContext context) : IGenericReposit
             .AddAsync(entity, cancellationToken);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
         context.Set<T>().Update(entity);
         return Task.CompletedTask;
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var entity = await GetByIdAsync(id, cancellationToken);
@@ -65,7 +65,7 @@ public class GenericRepository<T>(TalkCornerDbContext context) : IGenericReposit
         }
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
     {
         context.Set<T>().Remove(entity);

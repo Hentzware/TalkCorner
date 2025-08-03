@@ -6,7 +6,6 @@ public sealed class BoardDescription : ValueObject
 {
     private BoardDescription()
     {
-        
     }
 
     private BoardDescription(string value)

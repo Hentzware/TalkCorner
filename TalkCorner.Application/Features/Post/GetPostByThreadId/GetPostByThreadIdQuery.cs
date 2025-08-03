@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace TalkCorner.Application.Features.Post.GetPostByThreadId
-{
-    internal class GetPostByThreadIdQuery
-    {
-    }
-}
+namespace TalkCorner.Application.Features.Post.GetPostByThreadId;
+
+public record GetPostByThreadIdQuery(Guid ThreadId) : IRequest<IEnumerable<GetPostByThreadIdDto>>;

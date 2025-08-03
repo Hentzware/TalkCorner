@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace TalkCorner.Application.Features.User.GetUserById
-{
-    internal class GetUserByIdQuery
-    {
-    }
-}
+namespace TalkCorner.Application.Features.User.GetUserById;
+
+public record GetUserByIdQuery(Guid Id) : IRequest<GetUserByIdDto>;

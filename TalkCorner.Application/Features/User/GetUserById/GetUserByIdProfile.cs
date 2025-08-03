@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 
-namespace TalkCorner.Application.Features.User.GetUserById
+namespace TalkCorner.Application.Features.User.GetUserById;
+
+public class GetUserByIdProfile : Profile
 {
-    internal class GetUserByIdProfile
+    public GetUserByIdProfile()
     {
+        CreateMap<Domain.Entities.User, GetUserByIdDto>();
     }
 }

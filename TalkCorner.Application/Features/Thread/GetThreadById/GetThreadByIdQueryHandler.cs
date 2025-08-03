@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using MediatR;
+using TalkCorner.Application.Contracts.Persistence;
 
-namespace TalkCorner.Application.Features.Thread.GetThreadById
+namespace TalkCorner.Application.Features.Thread.GetThreadById;
+
+public class GetThreadByIdQueryHandler(IThreadRepository threadRepository, IMapper mapper) : IRequestHandler<GetThreadByIdQuery, GetThreadByIdDto>
 {
-    internal class GetThreadByIdQueryHandler
+    public async Task<GetThreadByIdDto> Handle(GetThreadByIdQuery request, CancellationToken cancellationToken)
     {
+        var thread = await threadRepository.GetThreadByIdAsync(request.Id);
+        
+        if (thread == null)
+        {
+            throw new InvalidOperationException("Thread does not exist.");
+        }
+
+        var dto = mapper.Map<GetThreadByIdDto>(thread);
+        return dto;
     }
 }

@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 
-namespace TalkCorner.Application.Features.Thread.GetThreadById
+namespace TalkCorner.Application.Features.Thread.GetThreadById;
+
+public class GetThreadByIdProfile : Profile
 {
-    internal class GetTreadByIdProfile
+    public GetThreadByIdProfile()
     {
+        CreateMap<Domain.Entities.Thread, GetThreadByIdDto>()
+            .ForMember(dest => dest.BoardTitle, opt => opt.MapFrom(src => src.Board.Title.Value))
+            .ForMember(dest => dest.CreatedByUsername, opt => opt.MapFrom(src => src.CreatedByUser.DisplayName))
+            .ForMember(dest => dest.Posts, opt => opt.MapFrom(src => src.Posts));
+
+        CreateMap<Domain.Entities.Post, GetThreadByIdPostListItemDto>()
+            .ForMember(dest => dest.CreatedByUsername, opt => opt.MapFrom(src => src.CreatedByUser.DisplayName));
     }
 }

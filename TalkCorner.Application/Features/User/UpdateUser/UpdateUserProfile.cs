@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 
-namespace TalkCorner.Application.Features.User.UpdateUser
+namespace TalkCorner.Application.Features.User.UpdateUser;
+
+public class UpdateUserProfile : Profile
 {
-    internal class UpdateUserProfile
+    public UpdateUserProfile()
     {
+        CreateMap<UpdateUserCommand, Domain.Entities.User>();
     }
 }

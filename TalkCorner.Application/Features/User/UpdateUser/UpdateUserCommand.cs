@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
+using MediatR;
 
-namespace TalkCorner.Application.Features.User.UpdateUser
+namespace TalkCorner.Application.Features.User.UpdateUser;
+
+public class UpdateUserCommand : IRequest<Unit>
 {
-    internal class UpdateUserCommand
-    {
-    }
+    public bool IsActive { get; set; }
+
+    [JsonIgnore]
+    public Guid Id { get; set; }
+
+    public string DisplayName { get; set; } = string.Empty;
 }

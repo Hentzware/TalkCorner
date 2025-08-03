@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
+using MediatR;
 
-namespace TalkCorner.Application.Features.Thread.DeleteThread
+namespace TalkCorner.Application.Features.Thread.DeleteThread;
+
+public class DeleteThreadCommand : IRequest<Unit>
 {
-    internal class DeleteThreadCommand
-    {
-    }
+    [JsonIgnore]
+    public Guid Id { get; init; }
 }

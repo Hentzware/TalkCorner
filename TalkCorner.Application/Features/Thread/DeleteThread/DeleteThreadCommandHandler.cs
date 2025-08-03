@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using MediatR;
+using TalkCorner.Application.Contracts.Persistence;
 
-namespace TalkCorner.Application.Features.Thread.DeleteThread
+namespace TalkCorner.Application.Features.Thread.DeleteThread;
+
+public class DeleteThreadCommandHandler(IThreadRepository threadRepository, IMapper mapper) : IRequestHandler<DeleteThreadCommand, Unit>
 {
-    internal class DeleteThreadCommandHandler
+    public async Task<Unit> Handle(DeleteThreadCommand request, CancellationToken cancellationToken)
     {
+        var thread = await threadRepository.GetThreadByIdWithTrackingAsync(request.Id);
+
+        if (thread == null)
+        {
+            throw new InvalidOperationException("Thread does not exist.");
+        }
+
+        await threadRepository.DeleteAsync(thread, cancellationToken);
+        await threadRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+
+        return Unit.Value;
     }
 }

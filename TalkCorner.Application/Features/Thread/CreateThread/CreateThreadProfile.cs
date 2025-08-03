@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 
-namespace TalkCorner.Application.Features.Thread.CreateThread
+namespace TalkCorner.Application.Features.Thread.CreateThread;
+
+public class CreateThreadProfile : Profile
 {
-    internal class CreateThreadProfile
+    public CreateThreadProfile()
     {
+        CreateMap<CreateThreadCommand, Domain.Entities.Thread>();
     }
 }

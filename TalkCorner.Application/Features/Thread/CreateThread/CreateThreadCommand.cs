@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace TalkCorner.Application.Features.Thread.CreateThread
+namespace TalkCorner.Application.Features.Thread.CreateThread;
+
+public class CreateThreadCommand : IRequest<Unit>
 {
-    internal class CreateThreadCommand
-    {
-    }
+    public Guid BoardId { get; set; }
+
+    public Guid CreatedByUserId { get; set; }
+
+    public string Content { get; set; } = string.Empty;
+
+    public string Title { get; set; } = string.Empty;
 }

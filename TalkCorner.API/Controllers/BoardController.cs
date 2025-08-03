@@ -38,7 +38,7 @@ public class BoardController(IMediator mediator) : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult> DeleteBoardAsync(Guid id)
     {
-        var request = new DeleteBoardCommand() { Id = id };
+        var request = new DeleteBoardCommand { Id = id };
         await mediator.Send(request);
         return NoContent();
     }

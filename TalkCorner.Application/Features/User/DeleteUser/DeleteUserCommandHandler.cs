@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using MediatR;
+using TalkCorner.Application.Contracts.Persistence;
 
-namespace TalkCorner.Application.Features.User.DeleteUser
+namespace TalkCorner.Application.Features.User.DeleteUser;
+
+public class DeleteUserCommandHandler(IUserRepository userRepository, IMapper mapper) : IRequestHandler<DeleteUserCommand, Unit>
 {
-    internal class DeleteUserCommandHandler
+    public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
+        var user = await userRepository.GetByIdWithTrackingAsync(request.Id);
+
+        if (user == null)
+        {
+            throw new InvalidOperationException("User does not exist.");
+        }
+
+        await userRepository.DeleteAsync(user, cancellationToken);
+        await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+
+        return Unit.Value;
     }
 }

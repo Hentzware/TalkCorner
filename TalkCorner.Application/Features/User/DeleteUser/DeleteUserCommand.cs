@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
+using MediatR;
 
-namespace TalkCorner.Application.Features.User.DeleteUser
+namespace TalkCorner.Application.Features.User.DeleteUser;
+
+public class DeleteUserCommand : IRequest<Unit>
 {
-    internal class DeleteUserCommand
-    {
-    }
+    [JsonIgnore]
+    public Guid Id { get; init; }
 }

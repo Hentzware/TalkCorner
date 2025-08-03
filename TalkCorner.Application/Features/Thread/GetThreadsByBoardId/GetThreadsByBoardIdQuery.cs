@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace TalkCorner.Application.Features.Thread.GetThreadsByBoardId
-{
-    internal class GetThreadsByBoardIdQuery
-    {
-    }
-}
+namespace TalkCorner.Application.Features.Thread.GetThreadsByBoardId;
+
+public record GetThreadsByBoardIdQuery(Guid BoardId) : IRequest<IEnumerable<GetThreadsByBoardIdDto>>;

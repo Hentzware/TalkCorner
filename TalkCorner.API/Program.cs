@@ -1,3 +1,4 @@
+using TalkCorner.API.Middleware;
 using TalkCorner.Application;
 using TalkCorner.Identity;
 using TalkCorner.Persistence;
@@ -31,6 +32,8 @@ public class Program
         builder.Services.AddControllers();
 
         var app = builder.Build();
+
+        app.UseMiddleware<ExceptionMiddleware>();
 
         if (app.Environment.IsDevelopment())
         {

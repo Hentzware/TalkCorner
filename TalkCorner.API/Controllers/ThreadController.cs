@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TalkCorner.API.Models;
 using TalkCorner.Application.Features.Thread.CreateThread;
 using TalkCorner.Application.Features.Thread.DeleteThread;
 using TalkCorner.Application.Features.Thread.GetThreadById;
@@ -10,7 +11,7 @@ namespace TalkCorner.API.Controllers;
 
 [Route("api/threads")]
 [ApiController]
-[ProducesErrorResponseType(typeof(ProblemDetails))]
+[ProducesErrorResponseType(typeof(CustomValidationProblemDetails))]
 public class ThreadController(IMediator mediator) : ControllerBase
 {
     [HttpGet("board/{boardId:guid}")]

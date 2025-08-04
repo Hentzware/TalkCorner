@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TalkCorner.API.Models;
 using TalkCorner.Application.Features.Board.CreateBoard;
 using TalkCorner.Application.Features.Board.DeleteBoard;
 using TalkCorner.Application.Features.Board.GetAllBoards;
@@ -10,6 +11,7 @@ namespace TalkCorner.API.Controllers;
 
 [Route("api/boards")]
 [ApiController]
+[ProducesErrorResponseType(typeof(CustomValidationProblemDetails))]
 public class BoardController(IMediator mediator) : ControllerBase
 {
     [HttpGet]

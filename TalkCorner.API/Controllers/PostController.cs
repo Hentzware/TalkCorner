@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TalkCorner.API.Models;
 using TalkCorner.Application.Features.Post.CreatePost;
 using TalkCorner.Application.Features.Post.DeletePost;
 using TalkCorner.Application.Features.Post.GetPostById;
@@ -10,7 +11,7 @@ namespace TalkCorner.API.Controllers;
 
 [Route("api/posts")]
 [ApiController]
-[ProducesErrorResponseType(typeof(ProblemDetails))]
+[ProducesErrorResponseType(typeof(CustomValidationProblemDetails))]
 public class PostController(IMediator mediator) : ControllerBase
 {
     [HttpGet("thread/{threadId:guid}")]

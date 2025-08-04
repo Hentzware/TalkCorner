@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TalkCorner.API.Models;
 using TalkCorner.Application.Features.User.DeleteUser;
 using TalkCorner.Application.Features.User.GetAllUsers;
 using TalkCorner.Application.Features.User.GetUserById;
@@ -9,7 +10,7 @@ namespace TalkCorner.API.Controllers;
 
 [Route("api/users")]
 [ApiController]
-[ProducesErrorResponseType(typeof(ProblemDetails))]
+[ProducesErrorResponseType(typeof(CustomValidationProblemDetails))]
 public class UserController(IMediator mediator) : ControllerBase
 {
     [HttpGet]

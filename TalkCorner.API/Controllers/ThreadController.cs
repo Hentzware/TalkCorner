@@ -18,7 +18,7 @@ public class ThreadController(IMediator mediator) : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<GetThreadsByBoardIdDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<GetThreadsByBoardIdDto>>> GetThreadsByBoardIdAsync(Guid boardId)
     {
-        var request = new GetThreadsByBoardIdQuery(boardId);
+        var request = new GetThreadsByBoardIdQuery { Id = boardId };
         var response = await mediator.Send(request);
         return Ok(response);
     }
@@ -28,7 +28,7 @@ public class ThreadController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetThreadByIdDto>> GetThreadByIdAsync(Guid id)
     {
-        var request = new GetThreadByIdQuery(id);
+        var request = new GetThreadByIdQuery { Id = id };
         var response = await mediator.Send(request);
         return Ok(response);
     }

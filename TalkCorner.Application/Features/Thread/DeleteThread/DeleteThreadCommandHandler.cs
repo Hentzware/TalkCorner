@@ -1,10 +1,9 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using TalkCorner.Application.Contracts.Persistence;
 
 namespace TalkCorner.Application.Features.Thread.DeleteThread;
 
-public class DeleteThreadCommandHandler(IThreadRepository threadRepository, IMapper mapper) : IRequestHandler<DeleteThreadCommand, Unit>
+public class DeleteThreadCommandHandler(IThreadRepository threadRepository) : IRequestHandler<DeleteThreadCommand, Unit>
 {
     public async Task<Unit> Handle(DeleteThreadCommand request, CancellationToken cancellationToken)
     {

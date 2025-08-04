@@ -29,6 +29,8 @@ public class Program
             });
         });
 
+        builder.Services.AddHttpContextAccessor();
+
         builder.Services.AddControllers();
 
         var app = builder.Build();

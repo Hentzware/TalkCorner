@@ -1,5 +1,10 @@
-﻿using MediatR;
+﻿using System.Text.Json.Serialization;
+using MediatR;
 
 namespace TalkCorner.Application.Features.Post.GetPostByThreadId;
 
-public record GetPostByThreadIdQuery(Guid ThreadId) : IRequest<IEnumerable<GetPostByThreadIdDto>>;
+public class GetPostByThreadIdQuery : IRequest<IEnumerable<GetPostByThreadIdDto>>
+{
+    [JsonIgnore]
+    public Guid Id { get; set; }
+}

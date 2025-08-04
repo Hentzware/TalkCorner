@@ -1,10 +1,10 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using TalkCorner.Application.Contracts.Persistence;
+using TalkCorner.Application.Exceptions;
 
 namespace TalkCorner.Application.Features.Post.UpdatePost;
 
-public class UpdatePostCommandHandler(IPostRepository postRepository, IMapper mapper) : IRequestHandler<UpdatePostCommand, Unit>
+public class UpdatePostCommandHandler(IPostRepository postRepository) : IRequestHandler<UpdatePostCommand, Unit>
 {
     public async Task<Unit> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
     {
@@ -12,7 +12,7 @@ public class UpdatePostCommandHandler(IPostRepository postRepository, IMapper ma
 
         if (post == null)
         {
-            throw new InvalidOperationException("Post does not exist.");
+            throw new NotFoundException(nameof(Domain.Entities.Post), request.Id);
         }
         
         post.UpdateContent(request.Content);

@@ -8,8 +8,9 @@ public class GetPostByThreadIdQueryHandler(IPostRepository postRepository, IMapp
 {
     public async Task<IEnumerable<GetPostByThreadIdDto>> Handle(GetPostByThreadIdQuery request, CancellationToken cancellationToken)
     {
-        var posts = await postRepository.GetPostsByThreadIdAsync(request.ThreadId);
+        var posts = await postRepository.GetPostsByThreadIdAsync(request.Id);
         var response = mapper.Map<IEnumerable<GetPostByThreadIdDto>>(posts);
+
         return response;
     }
 }

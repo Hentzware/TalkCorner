@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using TalkCorner.Application.Contracts.Persistence;
+using TalkCorner.Application.Exceptions;
 
 namespace TalkCorner.Application.Features.Post.GetPostById;
 
@@ -12,10 +13,11 @@ public class GetPostByIdQueryHandler(IPostRepository postRepository, IMapper map
 
         if (post == null)
         {
-            throw new InvalidOperationException("Post does not exist.");
+            throw new NotFoundException(nameof(Domain.Entities.Post), request.Id);
         }
 
-        var dto = mapper.Map<GetPostByIdDto>(post);
-        return dto;
+        var response = mapper.Map<GetPostByIdDto>(post);
+
+        return response;
     }
 }

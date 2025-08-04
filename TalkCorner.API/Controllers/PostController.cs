@@ -18,7 +18,7 @@ public class PostController(IMediator mediator) : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<GetPostByThreadIdDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<GetPostByThreadIdDto>>> GetPostsByThreadIdAsync(Guid threadId)
     {
-        var request = new GetPostByThreadIdQuery(threadId);
+        var request = new GetPostByThreadIdQuery(){ Id = threadId };
         var response = await mediator.Send(request);
         return Ok(response);
     }
@@ -28,7 +28,7 @@ public class PostController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetPostByIdDto>> GetPostByIdAsync(Guid id)
     {
-        var request = new GetPostByIdQuery(id);
+        var request = new GetPostByIdQuery() { Id = id };
         var response = await mediator.Send(request);
         if (response == null)
         {

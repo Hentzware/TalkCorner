@@ -6,6 +6,8 @@ public class GetPostByThreadIdValidator : AbstractValidator<GetPostByThreadIdQue
 {
     public GetPostByThreadIdValidator()
     {
-        // TODO: Implement GetPostByThreadIdValidator
+        RuleFor(x => x.Id)
+            .NotEmpty()
+            .WithMessage("ThreadId must not be empty.");
     }
 }

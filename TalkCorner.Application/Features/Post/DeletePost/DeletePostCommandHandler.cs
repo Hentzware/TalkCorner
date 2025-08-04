@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using TalkCorner.Application.Contracts.Persistence;
+using TalkCorner.Application.Exceptions;
 
 namespace TalkCorner.Application.Features.Post.DeletePost;
 
@@ -12,7 +13,7 @@ public class DeletePostCommandHandler(IPostRepository postRepository, IMapper ma
 
         if (post == null)
         {
-            throw new InvalidOperationException("Post does not exist.");
+            throw new NotFoundException(nameof(Domain.Entities.Post), request.Id);
         }
 
         await postRepository.DeleteAsync(post, cancellationToken);

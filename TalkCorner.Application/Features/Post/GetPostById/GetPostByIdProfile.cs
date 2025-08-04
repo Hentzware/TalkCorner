@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using TalkCorner.Domain.Entities;
 
 namespace TalkCorner.Application.Features.Post.GetPostById;
 
@@ -16,7 +15,10 @@ public class GetPostByIdProfile : Profile
     private static string? GetPreview(Domain.Entities.Post? parentPost)
     {
         if (parentPost == null || parentPost.Content == null || string.IsNullOrEmpty(parentPost.Content.Value))
+        {
             return null;
+        }
+
         var content = parentPost.Content.Value;
         return content.Length > 50 ? content.Substring(0, 50) : content;
     }

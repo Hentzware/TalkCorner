@@ -6,6 +6,8 @@ public class DeletePostValidator : AbstractValidator<DeletePostCommand>
 {
     public DeletePostValidator()
     {
-        // TODO: Implement DeletePostValidator
+        RuleFor(x => x.Id)
+            .NotEmpty()
+            .WithMessage("Id must not be empty.");
     }
 }

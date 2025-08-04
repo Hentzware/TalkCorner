@@ -6,6 +6,8 @@ public class GetPostByIdValidator : AbstractValidator<GetPostByIdQuery>
 {
     public GetPostByIdValidator()
     {
-        // TODO: Implement GetPostByIdValidator
+        RuleFor(x => x.Id)
+            .NotEmpty()
+            .WithMessage("Id must not be empty.");
     }
 }

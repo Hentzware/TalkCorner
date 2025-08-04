@@ -13,22 +13,24 @@ namespace TalkCorner.API.Controllers;
 public class BoardController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<GetAllBoardsDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<GetAllBoardsDto>>> GetAllBoardsAsync()
     {
-        var request = new GetAllBoardsQuery();
-        var response = await mediator.Send(request);
+        var response = await mediator.Send(new GetAllBoardsQuery());
         return Ok(response);
     }
 
     [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(GetBoardByIdDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetBoardByIdDto>> GetBoardByIdAsync(Guid id)
     {
-        var request = new GetBoardByIdQuery(id);
-        var response = await mediator.Send(request);
+        var response = await mediator.Send(new GetBoardByIdQuery(id));
         return Ok(response);
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     public async Task<ActionResult> CreateBoardAsync([FromBody] CreateBoardCommand request)
     {
         await mediator.Send(request);
@@ -36,14 +38,15 @@ public class BoardController(IMediator mediator) : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<ActionResult> DeleteBoardAsync(Guid id)
     {
-        var request = new DeleteBoardCommand { Id = id };
-        await mediator.Send(request);
+        await mediator.Send(new DeleteBoardCommand { Id = id });
         return NoContent();
     }
 
     [HttpPut("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<ActionResult> UpdateBoardAsync(Guid id, [FromBody] UpdateBoardCommand request)
     {
         request.Id = id;

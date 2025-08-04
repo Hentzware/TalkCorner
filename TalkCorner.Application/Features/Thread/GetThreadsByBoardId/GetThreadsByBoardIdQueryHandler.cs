@@ -10,6 +10,7 @@ public class GetThreadsByBoardIdQueryHandler(IThreadRepository threadRepository,
     {
         var threads = await threadRepository.GetThreadsByBoardIdAsync(request.BoardId);
         var response = mapper.Map<IEnumerable<GetThreadsByBoardIdDto>>(threads);
+
         return response;
     }
 }

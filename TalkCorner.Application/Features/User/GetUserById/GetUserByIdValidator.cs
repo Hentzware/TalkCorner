@@ -6,6 +6,8 @@ public class GetUserByIdValidator : AbstractValidator<GetUserByIdQuery>
 {
     public GetUserByIdValidator()
     {
-        // TODO: Implement GetUserByIdValidator
+        RuleFor(x => x.Id)
+            .NotEmpty()
+            .WithMessage("Id must not be empty.");
     }
 }

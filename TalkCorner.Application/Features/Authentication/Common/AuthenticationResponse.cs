@@ -1,4 +1,4 @@
-﻿namespace TalkCorner.Application.Features.Authentication;
+﻿namespace TalkCorner.Application.Features.Authentication.Common;
 
 public class AuthenticationResponse
 {

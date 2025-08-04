@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using TalkCorner.Application.Features.Authentication.Common;
 
 namespace TalkCorner.Application.Features.Authentication.Login;
 

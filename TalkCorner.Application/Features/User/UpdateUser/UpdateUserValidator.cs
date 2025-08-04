@@ -6,6 +6,14 @@ public class UpdateUserValidator : AbstractValidator<UpdateUserCommand>
 {
     public UpdateUserValidator()
     {
-        // TODO: Implement UpdateUserValidator
+        RuleFor(x => x.Id)
+            .NotEmpty()
+            .WithMessage("Id must not be empty.");
+
+        RuleFor(x => x.DisplayName)
+            .NotEmpty()
+            .WithMessage("DisplayName must not be empty.")
+            .MaximumLength(32)
+            .WithMessage("DisplayName must not exceed 32 characters.");
     }
 }

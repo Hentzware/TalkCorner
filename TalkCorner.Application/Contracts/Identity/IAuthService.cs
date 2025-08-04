@@ -1,4 +1,4 @@
-﻿using TalkCorner.Application.Features.Authentication;
+﻿using TalkCorner.Application.Features.Authentication.Common;
 using TalkCorner.Application.Features.Authentication.Login;
 using TalkCorner.Application.Features.Authentication.Register;
 

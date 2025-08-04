@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using TalkCorner.Application.Contracts.Identity;
+using TalkCorner.Application.Features.Authentication.Common;
 
 namespace TalkCorner.Application.Features.Authentication.Register;
 

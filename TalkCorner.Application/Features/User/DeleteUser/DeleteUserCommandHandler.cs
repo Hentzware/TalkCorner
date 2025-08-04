@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using TalkCorner.Application.Contracts.Persistence;
+using TalkCorner.Application.Exceptions;
 
 namespace TalkCorner.Application.Features.User.DeleteUser;
 
@@ -12,7 +13,7 @@ public class DeleteUserCommandHandler(IUserRepository userRepository, IMapper ma
 
         if (user == null)
         {
-            throw new InvalidOperationException("User does not exist.");
+            throw new NotFoundException(nameof(Domain.Entities.User), request.Id);
         }
 
         await userRepository.DeleteAsync(user, cancellationToken);

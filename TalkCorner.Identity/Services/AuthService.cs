@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using TalkCorner.Application.Contracts.Identity;
 using TalkCorner.Application.Contracts.Persistence;
 using TalkCorner.Application.Exceptions;
-using TalkCorner.Application.Features.Authentication;
+using TalkCorner.Application.Features.Authentication.Common;
 using TalkCorner.Application.Features.Authentication.Login;
 using TalkCorner.Application.Features.Authentication.Register;
 using TalkCorner.Application.Settings;

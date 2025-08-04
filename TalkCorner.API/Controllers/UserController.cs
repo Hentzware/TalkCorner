@@ -26,7 +26,7 @@ public class UserController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetUserByIdDto>> GetUserByIdAsync(Guid id)
     {
-        var response = await mediator.Send(new GetUserByIdQuery(id));
+        var response = await mediator.Send(new GetUserByIdQuery { Id = id });
         return Ok(response);
     }
 

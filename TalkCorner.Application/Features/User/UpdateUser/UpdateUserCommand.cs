@@ -5,8 +5,6 @@ namespace TalkCorner.Application.Features.User.UpdateUser;
 
 public class UpdateUserCommand : IRequest<Unit>
 {
-    public bool IsActive { get; set; }
-
     [JsonIgnore]
     public Guid Id { get; set; }
 

@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using TalkCorner.Domain.Common;
+﻿using TalkCorner.Domain.Common;
 using TalkCorner.Domain.ValueObjects;
 
 namespace TalkCorner.Domain.Entities;
 
 public class Board : BaseEntity
 {
-    public Board()
+    private Board()
     {
     }
 
@@ -18,8 +17,6 @@ public class Board : BaseEntity
         ParentBoardId = parentBoardId;
     }
 
-    [ForeignKey(nameof(ParentBoardId))]
-    [InverseProperty(nameof(SubBoards))]
     public Board? ParentBoard { get; private set; }
 
     public BoardDescription Description { get; private set; } = null!;
@@ -30,17 +27,12 @@ public class Board : BaseEntity
 
     public Guid? ParentBoardId { get; private set; }
 
-    [InverseProperty(nameof(ParentBoard))]
     public IReadOnlyCollection<Board> SubBoards { get; private set; } = new List<Board>();
 
-    [InverseProperty(nameof(Thread.Board))]
     public IReadOnlyCollection<Thread> Threads { get; private set; } = new List<Thread>();
 
-    [InverseProperty(nameof(User.ModeratedBoards))]
     public IReadOnlyCollection<User> Moderators { get; private set; } = new List<User>();
 
-    [ForeignKey(nameof(CreatedByUserId))]
-    [InverseProperty(nameof(User.CreatedBoards))]
     public User CreatedByUser { get; private set; } = null!;
 
     public static Board Create(string title, string description, Guid createdByUserId, Guid? parentBoardId = null)

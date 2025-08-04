@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using TalkCorner.Domain.Common;
+﻿using TalkCorner.Domain.Common;
 using TalkCorner.Domain.ValueObjects;
 
 namespace TalkCorner.Domain.Entities;
 
 public class User : BaseEntity
 {
-    public User()
+    private User()
     {
     }
 
@@ -20,16 +19,12 @@ public class User : BaseEntity
 
     public Guid ApplicationUserId { get; private set; }
 
-    [InverseProperty(nameof(Board.CreatedByUser))]
     public IReadOnlyCollection<Board> CreatedBoards { get; private set; } = new List<Board>();
 
-    [InverseProperty(nameof(Board.Moderators))]
     public IReadOnlyCollection<Board> ModeratedBoards { get; private set; } = new List<Board>();
 
-    [InverseProperty(nameof(Post.CreatedByUser))]
     public IReadOnlyCollection<Post> Posts { get; private set; } = new List<Post>();
 
-    [InverseProperty(nameof(Thread.CreatedByUser))]
     public IReadOnlyCollection<Thread> Threads { get; private set; } = new List<Thread>();
 
     public static User Create(Guid applicationUserId, string displayName)

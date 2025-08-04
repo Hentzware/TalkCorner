@@ -2,9 +2,6 @@
 
 namespace TalkCorner.Domain.ValueObjects;
 
-/// <summary>
-///     Encapsulates the content of a post, enforcing validation rules.
-/// </summary>
 public sealed class PostContent : ValueObject
 {
     private PostContent()

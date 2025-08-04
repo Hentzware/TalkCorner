@@ -13,6 +13,7 @@ public class TalkCornerDbContext(DbContextOptions<TalkCornerDbContext> options) 
     public DbSet<Post> Posts { get; set; }
 
     public DbSet<Thread> Threads { get; set; }
+
     public DbSet<User> Users { get; set; }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
@@ -39,60 +40,6 @@ public class TalkCornerDbContext(DbContextOptions<TalkCornerDbContext> options) 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(TalkCornerDbContext).Assembly);
-
-        // ========== User ==========
-        // (z.B. DisplayName)
-        modelBuilder.Entity<User>(builder =>
-        {
-            builder.OwnsOne(u => u.DisplayName, db =>
-            {
-                db.Property(d => d.Value)
-                    .HasColumnName("DisplayName")
-                    .IsRequired();
-            });
-        });
-
-        // ========== Board ==========
-        // Title und Description als ValueObject
-        modelBuilder.Entity<Board>(builder =>
-        {
-            builder.OwnsOne(b => b.Title, tb =>
-            {
-                tb.Property(t => t.Value)
-                    .HasColumnName("Title")
-                    .IsRequired();
-            });
-
-            builder.OwnsOne(b => b.Description, db =>
-            {
-                db.Property(d => d.Value)
-                    .HasColumnName("Description")
-                    .IsRequired();
-            });
-        });
-
-        // ========== Thread ==========
-        // Title als ValueObject
-        modelBuilder.Entity<Thread>(builder =>
-        {
-            builder.OwnsOne(t => t.Title, tb =>
-            {
-                tb.Property(ti => ti.Value)
-                    .HasColumnName("Title")
-                    .IsRequired();
-            });
-        });
-
-        // ========== Post ==========
-        // Content als ValueObject
-        modelBuilder.Entity<Post>(builder =>
-        {
-            builder.OwnsOne(p => p.Content, cb =>
-            {
-                cb.Property(c => c.Value)
-                    .HasColumnName("Content")
-                    .IsRequired();
-            });
-        });
+        base.OnModelCreating(modelBuilder);
     }
 }

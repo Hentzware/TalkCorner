@@ -2,7 +2,7 @@
 
 namespace TalkCorner.Domain.ValueObjects;
 
-public class BoardTitle : ValueObject
+public sealed class BoardTitle : ValueObject
 {
     private BoardTitle()
     {

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using TalkCorner.Domain.Common;
+﻿using TalkCorner.Domain.Common;
 using TalkCorner.Domain.ValueObjects;
 
 namespace TalkCorner.Domain.Entities;
@@ -24,21 +23,14 @@ public class Post : BaseEntity
 
     public Guid? ParentPostId { get; private set; }
 
-    [InverseProperty(nameof(ParentPost))]
     public IReadOnlyCollection<Post> Replies { get; private set; } = new List<Post>();
 
-    [ForeignKey(nameof(ParentPostId))]
-    [InverseProperty(nameof(Replies))]
     public Post? ParentPost { get; private set; }
 
     public PostContent Content { get; private set; } = null!;
 
-    [ForeignKey(nameof(ThreadId))]
-    [InverseProperty(nameof(Thread.Posts))]
     public Thread Thread { get; private set; } = null!;
 
-    [ForeignKey(nameof(CreatedByUserId))]
-    [InverseProperty(nameof(User.Posts))]
     public User CreatedByUser { get; private set; } = null!;
 
     public static Post Create(string content, Guid createdByUserId, Guid threadId, Guid? parentPostId = null)

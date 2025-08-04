@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using TalkCorner.Application.Contracts.Persistence;
+using TalkCorner.Application.Exceptions;
 
 namespace TalkCorner.Application.Features.Board.UpdateBoard;
 
@@ -12,7 +13,7 @@ public class UpdateBoardCommandHandler(IBoardRepository boardRepository, IMapper
 
         if (board == null)
         {
-            throw new Exception();
+            throw new NotFoundException(nameof(Domain.Entities.Board), request.Id);
         }
 
         board.UpdateTitle(request.Title);

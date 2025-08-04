@@ -6,6 +6,8 @@ public class DeleteBoardValidator : AbstractValidator<DeleteBoardCommand>
 {
     public DeleteBoardValidator()
     {
-        // TODO: Implement DeleteBoardValidator
+        RuleFor(x => x.Id)
+        .NotEmpty().WithMessage("Board Id is required.");
+
     }
 }

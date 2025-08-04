@@ -9,7 +9,8 @@ public class GetBoardByIdProfile : Profile
         CreateMap<Domain.Entities.Board, GetBoardByIdDto>()
             .ForMember(dest => dest.CreatedByUsername, opt => opt.MapFrom(src => src.CreatedByUser.DisplayName))
             .ForMember(dest => dest.ThreadCount, opt => opt.MapFrom(src => src.Threads.Count))
-            .ForMember(dest => dest.PostCount, opt => opt.MapFrom(src => src.Threads.SelectMany(t => t.Posts).Count()));
+            .ForMember(dest => dest.PostCount, opt => opt.MapFrom(src => src.Threads.SelectMany(t => t.Posts).Count()))
+            .ForMember(dest => dest.ParentBoardTitle, opt => opt.MapFrom(src => src.Title));
 
         CreateMap<Domain.Entities.Board, GetBoardByIdBoardListItemDto>()
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title.Value))

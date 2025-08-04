@@ -10,6 +10,7 @@ public class GetBoardByIdQueryHandler(IBoardRepository boardRepository, IMapper 
     {
         var board = await boardRepository.GetBoardByIdAsync(request.Id);
         var response = mapper.Map<GetBoardByIdDto>(board);
+
         return response;
     }
 }

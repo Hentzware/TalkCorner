@@ -15,6 +15,7 @@ public static class ApplicationServiceRegistration
         services.AddAutoMapper(config => { config.AddMaps(typeof(ApplicationServiceRegistration).Assembly); });
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UserContextBehavior<,>));
 
         services.AddValidatorsFromAssembly(typeof(ApplicationServiceRegistration).Assembly);
 

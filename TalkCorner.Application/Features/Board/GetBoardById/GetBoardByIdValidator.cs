@@ -6,6 +6,8 @@ public class GetBoardByIdValidator : AbstractValidator<GetBoardByIdQuery>
 {
     public GetBoardByIdValidator()
     {
-        // TODO: Implement GetBoardByIdValidator
+        RuleFor(x => x.Id)
+            .NotEmpty()
+            .WithMessage("Id must not be empty.");
     }
 }

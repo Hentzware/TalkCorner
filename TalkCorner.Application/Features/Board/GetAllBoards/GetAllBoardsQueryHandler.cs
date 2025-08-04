@@ -10,6 +10,7 @@ public class GetAllBoardsQueryHandler(IBoardRepository boardRepository, IMapper 
     {
         var boards = await boardRepository.GetBoardsAsync();
         var response = mapper.Map<IEnumerable<GetAllBoardsDto>>(boards);
+
         return response;
     }
 }

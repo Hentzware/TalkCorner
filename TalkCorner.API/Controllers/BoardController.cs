@@ -11,7 +11,7 @@ namespace TalkCorner.API.Controllers;
 
 [Route("api/boards")]
 [ApiController]
-[ProducesErrorResponseType(typeof(CustomValidationProblemDetails))]
+[ProducesErrorResponseType(typeof(CustomProblemDetails))]
 public class BoardController(IMediator mediator) : ControllerBase
 {
     [HttpGet]

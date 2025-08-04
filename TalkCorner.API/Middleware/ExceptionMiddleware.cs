@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Security.Authentication;
 using TalkCorner.API.Models;
 using TalkCorner.Application.Exceptions;
 
@@ -21,13 +22,13 @@ public class ExceptionMiddleware(RequestDelegate next)
     private async Task HandleExceptionAsync(HttpContext httpContext, Exception exception)
     {
         var statusCode = HttpStatusCode.InternalServerError;
-        var problem = new CustomValidationProblemDetails();
+        CustomProblemDetails problem;
 
         switch (exception)
         {
             case BadRequestException badRequestException:
                 statusCode = HttpStatusCode.BadRequest;
-                problem = new CustomValidationProblemDetails
+                problem = new CustomProblemDetails
                 {
                     Title = badRequestException.Message,
                     Status = (int)statusCode,
@@ -39,7 +40,7 @@ public class ExceptionMiddleware(RequestDelegate next)
 
             case NotFoundException notFoundException:
                 statusCode = HttpStatusCode.NotFound;
-                problem = new CustomValidationProblemDetails
+                problem = new CustomProblemDetails
                 {
                     Title = notFoundException.Message,
                     Status = (int)statusCode,
@@ -48,20 +49,9 @@ public class ExceptionMiddleware(RequestDelegate next)
                 };
                 break;
 
-            case ConflictException conflictException:
-                statusCode = HttpStatusCode.Conflict;
-                problem = new CustomValidationProblemDetails
-                {
-                    Title = conflictException.Message,
-                    Status = (int)statusCode,
-                    Detail = conflictException.InnerException?.Message,
-                    Type = nameof(ConflictException)
-                };
-                break;
-
             case UnauthorizedException unauthorizedException:
                 statusCode = HttpStatusCode.Unauthorized;
-                problem = new CustomValidationProblemDetails
+                problem = new CustomProblemDetails
                 {
                     Title = unauthorizedException.Message,
                     Status = (int)statusCode,
@@ -72,7 +62,7 @@ public class ExceptionMiddleware(RequestDelegate next)
 
             case ForbiddenException forbiddenException:
                 statusCode = HttpStatusCode.Forbidden;
-                problem = new CustomValidationProblemDetails
+                problem = new CustomProblemDetails
                 {
                     Title = forbiddenException.Message,
                     Status = (int)statusCode,
@@ -81,21 +71,9 @@ public class ExceptionMiddleware(RequestDelegate next)
                 };
                 break;
 
-            case UnprocessableEntityException unprocessableEntityException:
-                statusCode = (HttpStatusCode)422; // Unprocessable Entity
-                problem = new CustomValidationProblemDetails
-                {
-                    Title = unprocessableEntityException.Message,
-                    Status = (int)statusCode,
-                    Detail = unprocessableEntityException.InnerException?.Message,
-                    Type = nameof(UnprocessableEntityException),
-                    Errors = unprocessableEntityException.Errors
-                };
-                break;
-
             case ServiceUnavailableException serviceUnavailableException:
                 statusCode = HttpStatusCode.ServiceUnavailable;
-                problem = new CustomValidationProblemDetails
+                problem = new CustomProblemDetails
                 {
                     Title = serviceUnavailableException.Message,
                     Status = (int)statusCode,
@@ -104,8 +82,19 @@ public class ExceptionMiddleware(RequestDelegate next)
                 };
                 break;
 
+            case InvalidCredentialException invalidCredentialsException:
+                statusCode = HttpStatusCode.Unauthorized;
+                problem = new CustomProblemDetails
+                {
+                    Title = invalidCredentialsException.Message,
+                    Status = (int)statusCode,
+                    Detail = invalidCredentialsException.InnerException?.Message,
+                    Type = nameof(InvalidCredentialException)
+                };
+                break;
+
             default:
-                problem = new CustomValidationProblemDetails
+                problem = new CustomProblemDetails
                 {
                     Title = "An unexpected error occurred!",
                     Status = (int)statusCode,

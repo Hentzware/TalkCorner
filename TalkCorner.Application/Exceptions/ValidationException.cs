@@ -2,12 +2,7 @@
 
 namespace TalkCorner.Application.Exceptions;
 
-public class ValidationException : Exception
+public class ValidationException(string message, ValidationResult validationResult) : Exception(message)
 {
-    public ValidationException(string message, ValidationResult validationResult) : base(message)
-    {
-        ValidationErrors = validationResult.ToDictionary();
-    }
-
-    public IDictionary<string, string[]> ValidationErrors { get; }
+    public IDictionary<string, string[]> ValidationErrors { get; } = validationResult.ToDictionary();
 }

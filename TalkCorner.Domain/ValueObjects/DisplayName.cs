@@ -10,6 +10,7 @@ public sealed class DisplayName : ValueObject
 
     private DisplayName()
     {
+        Value = string.Empty;
     }
 
     private DisplayName(string value)

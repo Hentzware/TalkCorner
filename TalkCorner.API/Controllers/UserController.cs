@@ -10,7 +10,7 @@ namespace TalkCorner.API.Controllers;
 
 [Route("api/users")]
 [ApiController]
-[ProducesErrorResponseType(typeof(CustomValidationProblemDetails))]
+[ProducesErrorResponseType(typeof(CustomProblemDetails))]
 public class UserController(IMediator mediator) : ControllerBase
 {
     [HttpGet]

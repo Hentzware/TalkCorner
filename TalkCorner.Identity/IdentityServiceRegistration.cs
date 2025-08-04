@@ -9,6 +9,7 @@ using TalkCorner.Application.Contracts.Identity;
 using TalkCorner.Application.Settings;
 using TalkCorner.Identity.DatabaseContext;
 using TalkCorner.Identity.Models;
+using TalkCorner.Identity.Repositories;
 using TalkCorner.Identity.Services;
 
 namespace TalkCorner.Identity;
@@ -28,6 +29,7 @@ public static class IdentityServiceRegistration
         services.Configure<JwtSettings>(configuration.GetSection("JWT"));
 
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 
         services.AddDbContext<TalkCornerIdentityDbContext>(builder => { builder.UseMySql(connectionString, new MySqlServerVersion(new Version(9, 4, 0))); });
 

@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TalkCorner.Application.Contracts.Identity;
 using TalkCorner.Application.Contracts.Persistence;
+using TalkCorner.Application.Exceptions;
 using TalkCorner.Application.Features.Authentication;
 using TalkCorner.Application.Features.Authentication.Login;
 using TalkCorner.Application.Features.Authentication.Register;
@@ -23,21 +25,21 @@ public class AuthService(IUserRepository userRepository, UserManager<Application
 
         if (applicationUser == null)
         {
-            throw new Exception();
+            throw new InvalidCredentialException();
         }
 
         var result = await signInManager.CheckPasswordSignInAsync(applicationUser, request.Password, false);
 
         if (!result.Succeeded)
         {
-            throw new Exception();
+            throw new InvalidCredentialException();
         }
 
         var user = (await userRepository.GetAsync()).FirstOrDefault(x => x.ApplicationUserId == Guid.Parse(applicationUser.Id));
 
         if (user == null)
         {
-            throw new Exception();
+            throw new NotFoundException(nameof(User), request.Email);
         }
 
         var jwtSecurityToken = await GenerateTokenAsync(applicationUser, user);

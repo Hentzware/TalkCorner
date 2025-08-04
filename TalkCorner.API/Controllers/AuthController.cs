@@ -9,7 +9,7 @@ namespace TalkCorner.API.Controllers;
 
 [Route("api/auth")]
 [ApiController]
-[ProducesErrorResponseType(typeof(CustomValidationProblemDetails))]
+[ProducesErrorResponseType(typeof(CustomProblemDetails))]
 public class AuthController(IMediator mediator) : ControllerBase
 {
     [HttpPost("login")]

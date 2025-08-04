@@ -1,7 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using TalkCorner.Application;
+using TalkCorner.Identity;
 using TalkCorner.Persistence;
-using TalkCorner.Persistence.DatabaseContext;
 
 namespace TalkCorner.API;
 
@@ -13,16 +12,36 @@ public class Program
 
         builder.Services.AddApplicationServices(builder.Configuration);
         builder.Services.AddPersistenceServices(builder.Configuration);
+        builder.Services.AddIdentityServices(builder.Configuration);
+
+        builder.Services.AddSwaggerGen();
+        builder.Services.AddEndpointsApiExplorer();
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("Dev", policyBuilder =>
+            {
+                policyBuilder
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin();
+            });
+        });
 
         builder.Services.AddControllers();
 
         var app = builder.Build();
 
-        using var scope = app.Services.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<TalkCornerDbContext>();
-        ctx.Database.Migrate();
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseCors("Dev");
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
         app.UseHttpsRedirection();
+
+        app.UseAuthentication();
 
         app.UseAuthorization();
 

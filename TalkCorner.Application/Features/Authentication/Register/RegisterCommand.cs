@@ -1,0 +1,12 @@
+﻿using MediatR;
+
+namespace TalkCorner.Application.Features.Authentication.Register;
+
+public class RegisterCommand : IRequest<AuthenticationResponse>
+{
+    public string Email { get; set; } = string.Empty;
+
+    public string Password { get; set; } = string.Empty;
+
+    public string DisplayName { get; set; } = string.Empty;
+}

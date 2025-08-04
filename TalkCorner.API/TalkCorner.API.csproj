@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>9e2aa9a7-ab2b-452e-8654-f746a9be79c9</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,9 +12,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TalkCorner.Identity\TalkCorner.Identity.csproj" />
     <ProjectReference Include="..\TalkCorner.Persistence\TalkCorner.Persistence.csproj" />
   </ItemGroup>
 

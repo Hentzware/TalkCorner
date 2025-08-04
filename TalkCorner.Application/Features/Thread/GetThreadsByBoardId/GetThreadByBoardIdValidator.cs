@@ -6,6 +6,7 @@ public class GetThreadByBoardIdValidator : AbstractValidator<GetThreadsByBoardId
 {
     public GetThreadByBoardIdValidator()
     {
-        // TODO: Implement GetThreadByBoardIdValidator
+        RuleFor(x => x.Id)
+            .NotEmpty().WithMessage("Board Id is required.");
     }
 }

@@ -6,6 +6,7 @@ public class GetThreadByIdValidator : AbstractValidator<GetThreadByIdQuery>
 {
     public GetThreadByIdValidator()
     {
-        // TODO: Implement GetThreadByIdValidator
+        RuleFor(x => x.Id)
+            .NotEmpty().WithMessage("Thread Id is required.");
     }
 }

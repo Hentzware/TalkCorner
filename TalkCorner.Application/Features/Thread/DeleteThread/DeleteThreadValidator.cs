@@ -6,6 +6,7 @@ public class DeleteThreadValidator : AbstractValidator<DeleteThreadCommand>
 {
     public DeleteThreadValidator()
     {
-        // TODO: Implement DeleteThreadValidator
+        RuleFor(x => x.Id)
+            .NotEmpty().WithMessage("Thread Id is required.");
     }
 }

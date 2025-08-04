@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using TalkCorner.Application.Contracts.Persistence;
+using TalkCorner.Application.Exceptions;
 
 namespace TalkCorner.Application.Features.Thread.GetThreadById;
 
@@ -12,7 +13,7 @@ public class GetThreadByIdQueryHandler(IThreadRepository threadRepository, IMapp
         
         if (thread == null)
         {
-            throw new InvalidOperationException("Thread does not exist.");
+            throw new NotFoundException(nameof(Domain.Entities.Thread), request.Id);
         }
 
         var response = mapper.Map<GetThreadByIdDto>(thread);

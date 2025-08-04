@@ -8,7 +8,7 @@ public class GetThreadsByBoardIdQueryHandler(IThreadRepository threadRepository,
 {
     public async Task<IEnumerable<GetThreadsByBoardIdDto>> Handle(GetThreadsByBoardIdQuery request, CancellationToken cancellationToken)
     {
-        var threads = await threadRepository.GetThreadsByBoardIdAsync(request.BoardId);
+        var threads = await threadRepository.GetThreadsByBoardIdAsync(request.Id);
         var response = mapper.Map<IEnumerable<GetThreadsByBoardIdDto>>(threads);
 
         return response;

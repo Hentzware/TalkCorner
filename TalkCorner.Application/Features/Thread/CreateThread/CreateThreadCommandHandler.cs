@@ -1,14 +1,13 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using TalkCorner.Application.Contracts.Persistence;
 
 namespace TalkCorner.Application.Features.Thread.CreateThread;
 
-public class CreateThreadCommandHandler(IThreadRepository threadRepository, IMapper mapper) : IRequestHandler<CreateThreadCommand, Unit>
+public class CreateThreadCommandHandler(IThreadRepository threadRepository) : IRequestHandler<CreateThreadCommand, Unit>
 {
     public async Task<Unit> Handle(CreateThreadCommand request, CancellationToken cancellationToken)
     {
-        var thread = mapper.Map<Domain.Entities.Thread>(request);
+        var thread = Domain.Entities.Thread.Create(request.Title, request.CurrentUserId, request.BoardId);
 
         await threadRepository.AddAsync(thread, cancellationToken);
         await threadRepository.UnitOfWork.SaveChangesAsync(cancellationToken);

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using TalkCorner.Application.Contracts.Persistence;
+using TalkCorner.Application.Exceptions;
 
 namespace TalkCorner.Application.Features.Thread.UpdateThread;
 
@@ -11,7 +12,7 @@ public class UpdateThreadCommandHandler(IThreadRepository threadRepository) : IR
 
         if (thread == null)
         {
-            throw new InvalidOperationException("Thread does not exist.");
+            throw new NotFoundException(nameof(Domain.Entities.Thread), request.Id);
         }
         
         thread.UpdateTitle(request.Title);

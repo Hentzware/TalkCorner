@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using System;
 
-namespace TalkCorner.Application.Features.Moderation.AddModeratorToBoard
+namespace TalkCorner.Application.Features.Moderation.AddModeratorToBoard;
+
+public class AddModeratorToBoardCommand : IRequest<Unit>
 {
-    internal class AddModeratorToBoardCommand
-    {
-    }
+    public Guid BoardId { get; set; }
+    public Guid UserId { get; set; }
 }

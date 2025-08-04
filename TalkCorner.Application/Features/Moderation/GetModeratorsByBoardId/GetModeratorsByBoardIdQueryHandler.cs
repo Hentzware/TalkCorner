@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace TalkCorner.Application.Features.Moderation.GetModeratorsByBoardId;
 
-namespace TalkCorner.Application.Features.Moderation.GetModeratorsByBoardId
+internal class GetModeratorsByBoardIdQueryHandler
 {
-    internal class GetModeratorsByBoardIdQueryHandler
-    {
-    }
 }

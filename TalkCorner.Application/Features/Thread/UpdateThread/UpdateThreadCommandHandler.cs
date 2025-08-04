@@ -1,10 +1,9 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using TalkCorner.Application.Contracts.Persistence;
 
 namespace TalkCorner.Application.Features.Thread.UpdateThread;
 
-public class UpdateThreadCommandHandler(IThreadRepository threadRepository, IMapper mapper) : IRequestHandler<UpdateThreadCommand, Unit>
+public class UpdateThreadCommandHandler(IThreadRepository threadRepository) : IRequestHandler<UpdateThreadCommand, Unit>
 {
     public async Task<Unit> Handle(UpdateThreadCommand request, CancellationToken cancellationToken)
     {

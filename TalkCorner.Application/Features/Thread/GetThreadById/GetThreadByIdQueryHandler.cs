@@ -15,7 +15,8 @@ public class GetThreadByIdQueryHandler(IThreadRepository threadRepository, IMapp
             throw new InvalidOperationException("Thread does not exist.");
         }
 
-        var dto = mapper.Map<GetThreadByIdDto>(thread);
-        return dto;
+        var response = mapper.Map<GetThreadByIdDto>(thread);
+
+        return response;
     }
 }

@@ -1,0 +1,75 @@
+<!-- Responsive Forum Layout: Toggling Sidebar, kontrastreich, Grid-basiert -->
+
+<div class="min-h-screen grid grid-rows-[auto_1fr_auto] bg-gray-900 text-gray-200" style="height: 100vh;">
+
+  <!-- Header -->
+  <header class="bg-gray-950 shadow h-16 flex items-center justify-between px-4 md:px-8 border-b-2 border-cyan-700">
+    <div class="flex items-center gap-2">
+      <img src="assets/logo.svg" alt="TalkCorner Logo" class="h-8 w-8">
+      <span class="font-bold text-xl tracking-tight text-cyan-400">TalkCorner</span>
+    </div>
+    <nav class="flex items-center gap-4">
+      <!-- Hamburger-Button nur auf Mobile -->
+      <button
+        class="md:hidden flex items-center justify-center p-2 rounded bg-cyan-500 hover:bg-cyan-400 text-white"
+        (click)="toggleSidebar()"
+        aria-label="Open sidebar">
+        <!-- Hamburger Icon -->
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+      <!-- Navigation Desktop -->
+      <a routerLink="/" class="hover:text-cyan-400 font-semibold transition hidden md:inline">Home</a>
+      <a routerLink="/boards" class="hover:text-cyan-400 font-semibold transition hidden md:inline">Boards</a>
+      <a routerLink="/about" class="hover:text-cyan-400 font-semibold transition hidden md:inline">About</a>
+      <button (click)="navigateToLogin()" class="px-6 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-white font-semibold shadow transition hidden md:inline">
+        Login
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main area: Grid mit Sidebar + Content -->
+  <div class="grid grid-cols-1 md:grid-cols-[16rem_1fr] h-full">
+
+    <!-- Sidebar: Desktop -->
+    <aside class="hidden md:flex flex-col bg-gray-950 border-r-2 border-cyan-700 p-4 text-gray-100">
+      <span class="font-semibold text-lg mb-4 tracking-wide">Boards</span>
+      <nav class="flex flex-col gap-2">
+        <a routerLink="/boards/general"
+           class="hover:bg-cyan-700/40 hover:text-cyan-200 px-2 py-1 rounded transition font-medium">General</a>
+        <a routerLink="/boards/announcements"
+           class="hover:bg-cyan-700/40 hover:text-cyan-200 px-2 py-1 rounded transition font-medium">Announcements</a>
+      </nav>
+    </aside>
+
+    <!-- Sidebar: Mobile Overlay -->
+    <aside *ngIf="sidebarOpen"
+           class="fixed inset-0 z-50 flex md:hidden">
+      <div class="absolute inset-0 bg-black/50" (click)="closeSidebar()"></div>
+      <div class="relative w-64 h-full bg-gray-950 border-r-2 border-cyan-700 p-4 text-gray-100 z-10 shadow-xl">
+        <button class="absolute top-4 right-4 text-cyan-400" (click)="closeSidebar()" aria-label="Close sidebar">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+        <span class="font-semibold text-lg mb-4 tracking-wide">Boards</span>
+        <nav class="flex flex-col gap-2">
+          <a routerLink="/boards/general" class="hover:bg-cyan-700/40 hover:text-cyan-200 px-2 py-1 rounded transition font-medium">General</a>
+          <a routerLink="/boards/announcements" class="hover:bg-cyan-700/40 hover:text-cyan-200 px-2 py-1 rounded transition font-medium">Announcements</a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="p-4 md:p-8 overflow-y-auto bg-gray-800">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 shadow h-14 flex items-center justify-center text-sm text-gray-400 border-t border-cyan-900">
+    &copy; {{ currentYear }} TalkCorner · Hentzware
+  </footer>
+</div>

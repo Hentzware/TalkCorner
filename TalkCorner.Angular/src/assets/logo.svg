@@ -1,0 +1,14 @@
+<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hintergrundkreis mit Farbverlauf -->
+  <circle cx="24" cy="24" r="22" fill="url(#talkcorner-gradient)"></circle>
+  <!-- Sprechblase -->
+  <path d="M14 19C14 15.134 18.03 12 23 12C27.97 12 32 15.134 32 19C32 21.973 29.018 24.444 25.12 24.931L23 28L20.88 24.931C16.982 24.444 14 21.973 14 19Z" fill="white"></path>
+  <!-- Kleiner Punkt (Akzent, wie "Corner" oder Community) -->
+  <circle cx="34" cy="27" r="2" fill="white"></circle>
+  <defs>
+    <linearGradient id="talkcorner-gradient" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"></stop>
+      <stop offset="1" stop-color="#0ea5e9"></stop>
+    </linearGradient>
+  </defs>
+</svg>

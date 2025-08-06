@@ -10,6 +10,8 @@ public class GetAllBoardsDto
 
     public Guid? ParentBoardId { get; set; }
 
+    public int SortOrder { get; set; }
+
     public int SubBoardCount { get; set; }
 
     public int ThreadCount { get; set; }

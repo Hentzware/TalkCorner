@@ -18,6 +18,7 @@ public class UpdateBoardCommandHandler(IBoardRepository boardRepository, IMapper
 
         board.UpdateTitle(request.Title);
         board.UpdateDescription(request.Description);
+        board.UpdateSortOrder(request.SortOrder);
 
         await boardRepository.UpdateAsync(board, cancellationToken);
         await boardRepository.UnitOfWork.SaveChangesAsync(cancellationToken);

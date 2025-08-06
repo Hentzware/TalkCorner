@@ -12,6 +12,8 @@ public class CreateBoardCommand : IRequest<Unit>, IUserContextAware
 
     public string Title { get; set; } = string.Empty;
 
+    public int SortOrder { get; set; }
+
     [JsonIgnore]
     public Guid CurrentUserId { get; set; }
 }

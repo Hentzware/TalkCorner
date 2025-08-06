@@ -9,15 +9,18 @@ public class Board : BaseEntity
     {
     }
 
-    private Board(BoardTitle title, BoardDescription description, Guid createdByUserId, Guid? parentBoardId = null)
+    private Board(BoardTitle title, BoardDescription description, int sortOrder, Guid createdByUserId, Guid? parentBoardId = null)
     {
         Title = title;
         Description = description;
         CreatedByUserId = createdByUserId;
         ParentBoardId = parentBoardId;
+        SortOrder = sortOrder;
     }
 
-    public Board? ParentBoard { get; private set; }
+    public int SortOrder { get; private set; }
+
+    public Board? ParentBoard { get; private set; } = null!;
 
     public BoardDescription Description { get; private set; } = null!;
 
@@ -35,11 +38,21 @@ public class Board : BaseEntity
 
     public User CreatedByUser { get; private set; } = null!;
 
-    public static Board Create(string title, string description, Guid createdByUserId, Guid? parentBoardId = null)
+    public static Board Create(string title, string description, int sortOrder, Guid createdByUserId, Guid? parentBoardId = null)
     {
         var boardTitle = BoardTitle.Create(title);
         var boardDescription = BoardDescription.Create(description);
-        return new Board(boardTitle, boardDescription, createdByUserId, parentBoardId);
+        return new Board(boardTitle, boardDescription, sortOrder, createdByUserId, parentBoardId);
+    }
+
+    public void UpdateSortOrder(int newSortOrder)
+    {
+        SortOrder = newSortOrder;
+    }
+
+    public void UpdateParentBoardId(Guid? newParentBoardId)
+    {
+        ParentBoardId = newParentBoardId;
     }
 
     public void UpdateTitle(string newTitle)

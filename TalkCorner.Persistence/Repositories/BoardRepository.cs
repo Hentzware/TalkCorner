@@ -19,6 +19,7 @@ public class BoardRepository(TalkCornerDbContext context) : GenericRepository<Bo
             .Include(x => x.SubBoards)
             .Include(x => x.ParentBoard)
             .Include(x => x.Threads)
+            .OrderBy(x => x.SortOrder)
             .ToListAsync();
     }
 

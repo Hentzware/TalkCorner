@@ -7,7 +7,12 @@ public class CreateBoardCommandHandler(IBoardRepository boardRepository) : IRequ
 {
     public async Task<Unit> Handle(CreateBoardCommand request, CancellationToken cancellationToken)
     {
-        var board = Domain.Entities.Board.Create(request.Title, request.Description, request.CurrentUserId, request.ParentBoardId);
+        var board = Domain.Entities.Board.Create(
+            request.Title, 
+            request.Description, 
+            request.SortOrder, 
+            request.CurrentUserId, 
+            request.ParentBoardId);
 
         await boardRepository.AddAsync(board, cancellationToken);
         await boardRepository.UnitOfWork.SaveChangesAsync(cancellationToken);

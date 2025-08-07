@@ -18,6 +18,10 @@ public class Thread : BaseEntity
 
     public Board Board { get; private set; } = null!;
 
+    public bool IsClosed { get; private set; }
+
+    public bool IsSticky { get; private set; }
+
     public Guid BoardId { get; private set; }
 
     public Guid CreatedByUserId { get; private set; }
@@ -32,6 +36,31 @@ public class Thread : BaseEntity
     {
         var threadTitle = ThreadTitle.Create(title);
         return new Thread(threadTitle, createdByUserId, boardId);
+    }
+
+    public void Close()
+    {
+        IsClosed = true;
+    }
+
+    public void MoveToBoard(Guid newBoardId)
+    {
+        BoardId = newBoardId;
+    }
+
+    public void Open()
+    {
+        IsClosed = false;
+    }
+
+    public void Stick()
+    {
+        IsSticky = true;
+    }
+
+    public void Unstick()
+    {
+        IsSticky = false;
     }
 
     public void UpdateTitle(string newTitle)

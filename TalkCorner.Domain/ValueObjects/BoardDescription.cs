@@ -6,6 +6,7 @@ public sealed class BoardDescription : ValueObject
 {
     private BoardDescription()
     {
+        Value = string.Empty;
     }
 
     private BoardDescription(string value)
@@ -17,14 +18,14 @@ public sealed class BoardDescription : ValueObject
 
     public static BoardDescription Create(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
+        if (value == null)
         {
-            throw new ArgumentException("Die Board-Beschreibung darf nicht leer sein.", nameof(value));
+            throw new ArgumentNullException(nameof(value));
         }
 
         if (value.Length > 1000)
         {
-            throw new ArgumentException("Die Board-Beschreibung darf höchstens 1 000 Zeichen lang sein.", nameof(value));
+            throw new ArgumentException(nameof(value));
         }
 
         return new BoardDescription(value);

@@ -12,6 +12,8 @@ public class GetBoardByIdDto
 
     public int ThreadCount { get; set; }
 
+    public int SortOrder { get; set; }
+
     public List<GetBoardByIdBoardListItemDto> SubBoards { get; set; } = [];
 
     public List<GetBoardByIdThreadListItemDto> Threads { get; set; } = [];

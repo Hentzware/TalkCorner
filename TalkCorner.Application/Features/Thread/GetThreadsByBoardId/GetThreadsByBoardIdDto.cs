@@ -2,6 +2,10 @@
 
 public class GetThreadsByBoardIdDto
 {
+    public bool IsClosed { get; set; }
+
+    public bool IsSticky { get; set; }
+
     public DateTime Created { get; set; }
 
     public DateTime? Updated { get; set; }

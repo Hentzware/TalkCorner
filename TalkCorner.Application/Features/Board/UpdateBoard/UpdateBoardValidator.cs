@@ -14,7 +14,7 @@ public class UpdateBoardValidator : AbstractValidator<UpdateBoardCommand>
             .MaximumLength(100).WithMessage("Title must not exceed 100 characters.");
 
         RuleFor(x => x.Description)
-            .NotEmpty().WithMessage("Description is required.")
+            .NotNull().WithMessage("Description is required.")
             .MaximumLength(500).WithMessage("Description must not exceed 500 characters.");
 
         RuleFor(x => x.SortOrder)

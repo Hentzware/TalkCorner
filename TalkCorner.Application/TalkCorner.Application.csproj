@@ -19,10 +19,4 @@
     <ProjectReference Include="..\TalkCorner.Domain\TalkCorner.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Thread\UnstickThread\" />
-    <Folder Include="Features\Thread\StickThread\" />
-    <Folder Include="Features\Thread\OpenThread\" />
-  </ItemGroup>
-
 </Project>

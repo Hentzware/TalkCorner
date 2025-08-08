@@ -16,8 +16,6 @@ public class TalkCornerDbContextFactory : IDesignTimeDbContextFactory<TalkCorner
         var optionsBuilder = new DbContextOptionsBuilder<TalkCornerDbContext>();
         var connectionString = config.GetConnectionString("TalkCornerDb");
 
-        Console.WriteLine(connectionString);
-
         if (string.IsNullOrEmpty(connectionString))
         {
             throw new InvalidOperationException("ConnectionString TalkCornerDb not found.");

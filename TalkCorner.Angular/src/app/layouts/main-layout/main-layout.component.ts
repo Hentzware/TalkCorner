@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Router} from "@angular/router";
+import {Component} from '@angular/core';
+import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-main-layout',
@@ -7,24 +8,16 @@ import { Router} from "@angular/router";
   styleUrl: './main-layout.component.css'
 })
 export class MainLayoutComponent {
-  constructor(private router: Router) {
-  }
   currentYear = new Date().getFullYear();
-  sidebarOpen = false;
 
-  toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
-  }
-
-  closeSidebar() {
-    this.sidebarOpen = false;
-  }
+  constructor(private router: Router, public authService: AuthService) {}
 
   navigateToLogin() {
     this.router.navigate(['login']);
   }
 
-  navigateToBoards() {
+  logout() {
+    this.authService.logout();
     this.router.navigate(['boards']);
   }
 }

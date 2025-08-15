@@ -1,0 +1,69 @@
+<div class="w-full max-w-3xl mx-auto py-10">
+
+  <!-- Fehleranzeige -->
+  <div *ngIf="error" class="mb-4 p-3 rounded bg-red-900/60 text-red-200 font-medium">
+    {{ error }}
+  </div>
+
+  <!-- Benutzerliste -->
+  <div class="tc-card p-6 mb-10">
+    <div class="tc-title mb-4">Benutzerverwaltung</div>
+    <div *ngIf="loading" class="text-gray-400">Lade Nutzer...</div>
+    <table *ngIf="!loading && users.length" class="w-full text-left border-separate border-spacing-y-2">
+      <thead>
+      <tr class="text-gray-400 text-sm">
+        <th class="pl-2">Display Name</th>
+        <th class="pl-2">Aktionen</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users"
+          class="bg-gray-800/80 hover:bg-gray-700/70 transition rounded">
+        <td class="pl-2 py-2">{{ user.displayName }}</td>
+        <td class="pl-2 py-2 flex gap-2">
+          <button (click)="editUser(user)"
+                  class="px-3 py-1 rounded bg-blue-700 hover:bg-blue-600 text-white text-xs font-medium transition">Bearbeiten</button>
+          <button (click)="deleteUser(user)"
+                  class="px-3 py-1 rounded bg-red-700 hover:bg-red-600 text-white text-xs font-medium transition">Löschen</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!loading && !users.length" class="text-gray-400">Keine Nutzer gefunden.</div>
+  </div>
+
+  <!-- Edit-Formular -->
+  <form *ngIf="editingUser"
+        [formGroup]="userForm"
+        (ngSubmit)="submitUser()"
+        class="tc-card flex flex-col gap-4 p-6 max-w-md mx-auto animate-fade-in-up">
+    <div class="tc-title">Nutzer bearbeiten</div>
+
+    <label class="text-sm text-gray-400 font-medium">
+      Anzeigename
+      <input formControlName="displayName"
+             maxlength="100"
+             type="text"
+             class="tc-input mt-1"
+             [class.border-red-400]="userForm.get('displayName')?.invalid && userForm.get('displayName')?.touched"/>
+    </label>
+    <div *ngIf="userForm.get('displayName')?.invalid && userForm.get('displayName')?.touched"
+         class="text-red-300 text-xs mb-2">
+      Name darf nicht leer sein und max. 100 Zeichen haben.
+    </div>
+
+    <div class="flex gap-2 mt-2">
+      <button type="submit"
+              [disabled]="userForm.invalid"
+              class="px-4 py-2 rounded bg-green-700 hover:bg-green-600 text-white font-semibold transition">
+        Speichern
+      </button>
+      <button type="button"
+              (click)="cancelEdit()"
+              class="px-4 py-2 rounded bg-gray-700 hover:bg-gray-600 text-gray-100 font-semibold transition">
+        Abbrechen
+      </button>
+    </div>
+  </form>
+
+</div>

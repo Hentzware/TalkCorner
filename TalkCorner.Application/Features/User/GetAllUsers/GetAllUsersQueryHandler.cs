@@ -20,8 +20,8 @@ public class GetAllUsersQueryHandler(IUserRepository userRepository, IApplicatio
             {
                 Id = user.Id,
                 DisplayName = user.DisplayName.Value,
-                Created = user.Created.Value,
-                Updated = user.Updated.Value,
+                Created = user.Created,
+                Updated = user.Updated,
                 Email = appUser.Email
             }
         );

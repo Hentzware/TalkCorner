@@ -21,7 +21,7 @@ public class TalkCornerDbContextFactory : IDesignTimeDbContextFactory<TalkCorner
             throw new InvalidOperationException("ConnectionString TalkCornerDb not found.");
         }
 
-        optionsBuilder.UseMySql(connectionString, new MariaDbServerVersion(new Version(9, 4, 0)));
+        optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(9, 4, 0)));
 
         return new TalkCornerDbContext(optionsBuilder.Options);
     }

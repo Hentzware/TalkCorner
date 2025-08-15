@@ -1,0 +1,12 @@
+<div class="tc-card">
+  <div class="tc-title">Threads im Board</div>
+  <div *ngIf="loading">Lädt…</div>
+  <div *ngIf="error" class="text-red-500">{{ error }}</div>
+  <ul *ngIf="threads.length > 0">
+    <li *ngFor="let thread of threads" class="border-b py-2 hover:bg-gray-800 cursor-pointer">
+      <!-- Hier später Link zu Thread-Detail -->
+      {{ thread.title }}
+    </li>
+  </ul>
+  <div *ngIf="!loading && threads.length === 0">Keine Threads gefunden.</div>
+</div>

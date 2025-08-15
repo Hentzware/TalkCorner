@@ -39,10 +39,11 @@ public class Program
 
         if (app.Environment.IsDevelopment())
         {
-            app.UseCors("Dev");
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.UseCors("Dev");
 
         app.UseHttpsRedirection();
 

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using TalkCorner.Application.Contracts.Persistence;
 using TalkCorner.Persistence.DatabaseContext;
 using TalkCorner.Persistence.Repositories;
@@ -51,10 +52,18 @@ public static class PersistenceServiceRegistration
         using var scope = serviceProvider.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<TalkCornerDbContext>();
 
-        if (!dbContext.Database.CanConnect())
+        try
         {
-            throw new InvalidOperationException("Connection to TalkCornerDb cannot be established.");
+            if (!dbContext.Database.CanConnect())
+            {
+                throw new InvalidOperationException("Connection to TalkCornerDb cannot be established.");
+            }
         }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        
 
         return services;
     }

@@ -17,4 +17,8 @@
     <ProjectReference Include="..\TalkCorner.Application\TalkCorner.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

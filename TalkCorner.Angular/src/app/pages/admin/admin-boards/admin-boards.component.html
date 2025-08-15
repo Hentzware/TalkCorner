@@ -1,0 +1,67 @@
+<div class="w-full max-w-3xl mx-auto flex flex-col gap-8 py-8">
+
+  <!-- Board Create/Update Dialog -->
+  <app-admin-board-dialog
+    *ngIf="showBoardDialog"
+    [mode]="boardDialogMode"
+    [initialTitle]="editingBoard?.title || ''"
+    [initialDescription]="editingBoard?.description || ''"
+    [initialSortOrder]="editingBoard?.sortOrder || 0"
+    (cancel)="onBoardDialogCancel()"
+    (save)="onBoardDialogSave($event)"
+  ></app-admin-board-dialog>
+
+  <!-- Delete Dialog -->
+  <app-delete-confirm-dialog
+    *ngIf="showDeleteConfirmDialog"
+    [title]="'Delete Board'"
+    [message]="'Do you really want to delete the board ' + showDeleteConfirmDialog.title + '?'"
+    [confirmText]="'Delete'"
+    [cancelText]="'Cancel'"
+    (confirm)="onDeleteConfirmed()"
+    (cancel)="onDeleteCanceled()"
+  ></app-delete-confirm-dialog>
+
+  <!-- Dialog-Trigger -->
+  <button
+    class="w-fit self-end mb-2 px-5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium shadow"
+    (click)="openBoardDialog('create')">
+    Neues Board anlegen
+  </button>
+
+  <!-- Ladeanzeige -->
+  <div *ngIf="loading" class="text-center text-indigo-400">Lade Boards...</div>
+
+  <!-- Boards-Liste -->
+  <div *ngIf="!loading && boards.length > 0" class="flex flex-col gap-4">
+    <div *ngFor="let board of boards" class="bg-gray-900 rounded-xl p-5 border border-gray-700 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow">
+      <div>
+        <div class="text-lg font-bold text-gray-100">{{ board.title }}</div>
+        <div class="text-gray-400 text-sm mt-2 mb-2">{{ board.description }}</div>
+        <div class="mt-2 flex gap-4 text-xs text-gray-400">
+          <span>Order: {{ board.sortOrder }}</span>
+        </div>
+        <div class="mt-2 flex gap-4 text-xs text-gray-400">
+          <span>Threads: {{ board.threadCount }}</span>
+          <span>Sub-Boards: {{ board.subBoardCount }}</span>
+        </div>
+      </div>
+      <div class="flex gap-2 mt-2 md:mt-0">
+        <button
+          class="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm shadow"
+          (click)="openBoardDialog('edit', board)">
+          Bearbeiten
+        </button>
+        <button
+          class="px-4 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium text-sm shadow"
+          (click)="deleteBoard(board)">
+          Löschen
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && boards.length === 0" class="text-center text-gray-400 mt-8">
+    Es sind noch keine Boards angelegt.
+  </div>
+</div>

@@ -4,6 +4,21 @@
       <img src="assets/logo.svg" alt="TalkCorner Logo" class="h-12 w-12">
       <h1 class="text-2xl font-bold text-cyan-400">Login to TalkCorner</h1>
     </div>
+
+    <!-- Demo Buttons -->
+    <div class="flex gap-4 justify-center">
+      <button type="button"
+              class="px-4 py-1 rounded-lg bg-cyan-700 text-white text-sm hover:bg-cyan-600 transition"
+              (click)="setDemoUserCredentials()">
+        Demo-User
+      </button>
+      <button type="button"
+              class="px-4 py-1 rounded-lg bg-pink-700 text-white text-sm hover:bg-pink-600 transition"
+              (click)="setDemoAdminCredentials()">
+        Demo-Admin
+      </button>
+    </div>
+
     <form (ngSubmit)="onSubmit()" [formGroup]="form" class="flex flex-col gap-4">
       <div>
         <label for="email" class="block mb-1 font-medium text-gray-200">E-Mail</label>

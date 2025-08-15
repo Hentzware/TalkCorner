@@ -1,0 +1,33 @@
+<div class="w-full max-w-4xl mx-auto flex flex-col gap-10 mt-12">
+
+  <div class="tc-title text-2xl mb-8 font-bold text-center">Admin Bereich</div>
+
+  <ng-container *tcHasAnyRole="'Administrator'; else noAccess">
+    <div class="grid gap-6 sm:grid-cols-2">
+
+      <div class="tc-card flex flex-col items-center p-6 rounded-2xl shadow-lg hover:shadow-2xl transition">
+        <div class="text-lg font-semibold mb-2">Boards verwalten</div>
+        <p class="text-sm text-gray-400 mb-4">Füge Boards hinzu, bearbeite oder lösche sie.</p>
+        <a routerLink="/admin/boards" class="btn-primary">Boards öffnen</a>
+      </div>
+
+      <div class="tc-card flex flex-col items-center p-6 rounded-2xl shadow-lg hover:shadow-2xl transition">
+        <div class="text-lg font-semibold mb-2">Benutzer verwalten</div>
+        <p class="text-sm text-gray-400 mb-4">Verwalte User, Rechte & Rollen.</p>
+        <a routerLink="/admin/users" class="btn-primary">Benutzer öffnen</a>
+      </div>
+
+      <div class="tc-card flex flex-col items-center p-6 rounded-2xl shadow-lg opacity-50 pointer-events-none">
+        <div class="text-lg font-semibold mb-2">Einstellungen</div>
+        <p class="text-sm text-gray-400 mb-4">Konfiguration (coming soon)</p>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #noAccess>
+    <div class="bg-red-900/80 text-red-200 rounded-xl px-6 py-8 text-center shadow-xl">
+      <div class="text-xl font-bold mb-3">Kein Zugriff</div>
+      <div>Du benötigst Administratorrechte, um diese Seite zu sehen.</div>
+    </div>
+  </ng-template>
+</div>

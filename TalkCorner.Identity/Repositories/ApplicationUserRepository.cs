@@ -16,24 +16,40 @@ public class ApplicationUserRepository(UserManager<ApplicationUser> userManager)
 
     public async Task<IEnumerable<ApplicationUserDto>> GetAllApplicationUsersAsync()
     {
-        return await userManager.Users
-            .Select(x => new ApplicationUserDto()
+        var users = await userManager.Users.ToListAsync();
+        var results = new List<ApplicationUserDto>();
+
+        foreach (var user in users)
+        {
+            var roles = await userManager.GetRolesAsync(user);
+
+            results.Add(new ApplicationUserDto
             {
-                Id = Guid.Parse(x.Id),
-                Email = x.Email!
-            })
-            .ToListAsync();
+                Id = Guid.Parse(user.Id),
+                Email = user.Email!,
+                Roles = roles.ToList()
+            });
+        }
+
+        return results;
     }
 
     public async Task<ApplicationUserDto?> GetApplicationUserByIdAsync(Guid id)
     {
-        return await userManager.Users
-            .Where(x => x.Id == id.ToString())
-            .Select(x => new ApplicationUserDto()
-            {
-                Id = Guid.Parse(x.Id),
-                Email = x.Email!
-            })
-            .FirstOrDefaultAsync();
+        var user = await userManager.FindByIdAsync(id.ToString());
+
+        if (user == null)
+        {
+            return null;
+        }
+
+        var roles = await userManager.GetRolesAsync(user);
+
+        return new ApplicationUserDto
+        {
+            Id = Guid.Parse(user.Id),
+            Email = user.Email!,
+            Roles = roles.ToList()
+        };
     }
 }

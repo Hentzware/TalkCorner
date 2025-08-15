@@ -1,1 +1,21 @@
-<p>boards works!</p>
+<div class="w-full max-w mx-auto flex flex-col gap-10 mt-12">
+  <!-- Boards-Liste -->
+  <div class="flex flex-col gap-10">
+    <a
+      *ngFor="let board of boards"
+      [routerLink]="['/boards', board.id]"
+      class="tc-card tc-card-hover flex flex-col gap-2 w-full cursor-pointer transition hover:shadow-xl"
+      tabindex="0"
+    >
+      <div class="flex items-center justify-between">
+        <h2 class="tc-heading">{{ board.title }}</h2>
+        <span class="tc-label">Threads: {{ board.threadCount }}</span>
+      </div>
+      <div class="tc-subtext">{{ board.description }}</div>
+      <div class="flex gap-3 mt-2">
+        <span class="tc-badge tc-badge-blue">{{ board.subBoardCount }} Sub-Boards</span>
+        <span class="tc-badge tc-badge-green">{{ board.threadCount }} Threads</span>
+      </div>
+    </a>
+  </div>
+</div>
